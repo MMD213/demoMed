@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<AnchorPane fx:id="Osnova" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+   <children>
+      <BorderPane fx:id="SpisokPatientov" prefHeight="800.0" prefWidth="1200.0">
+         <bottom>
+            <TableView fx:id="Patient" editable="true" prefHeight="600.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="PatID" text="ID" prefWidth="75.0">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="idPatient"/>
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="PatNomerPol" prefWidth="172.0" text="Номер страхового полиса" />
+                  <TableColumn fx:id="PatNomerKnigi" minWidth="0.0" prefWidth="219.0" text="Номер медецинсокой книжки" />
+                  <TableColumn fx:id="PatFIO" minWidth="1.0" prefWidth="305.0" text="ФИО" />
+                  <TableColumn fx:id="PatMesto" prefWidth="290.0" text="Место жительства" />
+                  <TableColumn fx:id="PatData" prefWidth="138.0" text="Дата рождения" />
+               </columns>
+            </TableView>
+         </bottom>
+         <top>
+            <AnchorPane prefHeight="216.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="36.0" layoutY="150.0" text="Место жительства">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="846.0" layoutY="83.0" text="Введите ФИО">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="36.0" layoutY="108.0" prefHeight="25.0" prefWidth="224.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumPolOsn" onAction="#PatientPoiskID" prefHeight="26.0" prefWidth="225.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="306.0" layoutY="108.0" prefHeight="25.0" prefWidth="218.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumStrash" onAction="#PatientPoiskStrahPol" prefHeight="26.0" prefWidth="216.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="542.0" layoutY="83.0" text="Номер медецинской книжки">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="542.0" layoutY="108.0" prefHeight="25.0" prefWidth="244.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumMedBook" onAction="#PatientPoiskMedBook" prefHeight="26.0" prefWidth="244.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="36.0" layoutY="177.0" prefHeight="25.0" prefWidth="223.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="PolsMesto" onAction="#PatientPoiskMesto" prefHeight="26.0" prefWidth="222.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="306.0" layoutY="83.0" text="Номер страхового полиса">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="36.0" layoutY="83.0" text="Введите ID">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="846.0" layoutY="108.0" prefHeight="25.0" prefWidth="320.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="PolFIO" onAction="#PatientPoiskFIO" prefHeight="26.0" prefWidth="320.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="306.0" layoutY="150.0" text="Дата рождения">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="306.0" layoutY="177.0" prefHeight="25.0" prefWidth="223.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="PolsData" onAction="#PatientPoiskData" prefHeight="26.0" prefWidth="222.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="558.0" layoutY="21.0" text="Пациенты">
+                     <font>
+                        <Font name="Times New Roman" size="36.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="MenuReturn1" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
+                  <Button fx:id="PatienntDob" layoutX="100.0" mnemonicParsing="false" onAction="#DobPatient" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="PatienntDel" layoutX="200.0" mnemonicParsing="false" onAction="#DelPatient" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+      <BorderPane fx:id="IstoriaBolezni" prefHeight="800.0" prefWidth="1200.0" visible="false">
+         <bottom>
+            <TableView fx:id="Diagnoz" prefHeight="604.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="DiagnozID" editable="false" prefWidth="84.0" text="ID" />
+                <TableColumn fx:id="DiagnozPatient" prefWidth="121.0" text="Пациент" />
+                  <TableColumn fx:id="DiagnozData" prefWidth="83.0" text="Дата" />
+                  <TableColumn fx:id="DiagnozJaloba" prefWidth="123.0" text="Жалобы" />
+                  <TableColumn fx:id="DiagnozZabolevanie" prefWidth="150.0" text="Заболевание" />
+                  <TableColumn fx:id="DiagnozYlychenie" prefWidth="148.0" text="Улучшения" />
+                  <TableColumn fx:id="DiagnozLechenie" prefWidth="281.0" text="Лечение" />
+                  <TableColumn prefWidth="136.0" text="Врач" />
+                  <TableColumn fx:id="Status" prefWidth="100.0" text="Статус" />
+              </columns>
+            </TableView>
+         </bottom>
+         <top>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="277.0" layoutY="75.0" text="Введите номер страхового полиса">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="534.0" layoutY="75.0" text="Введите ФИО">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="275.0" layoutY="101.0" prefHeight="25.0" prefWidth="224.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumPol" onAction="#PoiskNumStrahPolDiag" prefHeight="26.0" prefWidth="225.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="534.0" layoutY="101.0" prefHeight="25.0" prefWidth="194.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumFIO" onAction="#PoiskFIODiag" prefHeight="26.0" prefWidth="195.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="760.0" layoutY="76.0" text="Заболевание">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="760.0" layoutY="102.0" prefHeight="25.0" prefWidth="194.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="Zabol" onAction="#PoiskZabDiag" prefHeight="26.0" prefWidth="194.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="984.0" layoutY="103.0" prefHeight="25.0" prefWidth="194.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="VrachPoisk" onAction="#PoiskVrachDiag" prefHeight="26.0" prefWidth="194.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="985.0" layoutY="77.0" text="Врач">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="75.0" text="Введите ID">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="28.0" layoutY="101.0" prefHeight="25.0" prefWidth="224.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="NumID" onAction="#PoiskIDDiag" prefHeight="10.0" prefWidth="224.0" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="MenuReturn" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
+                  <Button fx:id="DiagDob" layoutX="100.0" mnemonicParsing="false" onAction="#DobDiag" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="DiagDel" layoutX="200.0" mnemonicParsing="false" onAction="#DelDiag" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
+                  <Label layoutX="30.0" layoutY="135.0" text="Выберите статус">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="StatusPoisk" layoutX="30.0" layoutY="155.0" onAction="#PoskStatus" prefWidth="150.0" style="-fx-border-color: black;" />
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+      <BorderPane fx:id="Vrachi" prefHeight="804.0" prefWidth="1200.0" visible="false">
+         <top>
+            <AnchorPane prefHeight="141.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ComboBox fx:id="VrachFIOCombox" layoutX="378.0" layoutY="68.0" onAction="#PoiskFIOVrach" prefWidth="150.0" />
+                  <ComboBox fx:id="VrachSpecCombox" layoutX="554.0" layoutY="68.0" onAction="#PoiskSpecVrach" prefWidth="150.0" />
+                  <ComboBox fx:id="VrachDoljnostCombox" layoutX="733.0" layoutY="68.0" onAction="#PoiskDolgVrach" prefWidth="150.0" />
+                  <Pane layoutX="897.0" layoutY="68.0" prefHeight="25.0" prefWidth="127.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="VrachStajText" onAction="#PoiskStajVrach" prefHeight="26.0" prefWidth="127.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="177.0" layoutY="68.0" prefHeight="25.0" prefWidth="164.0" style="-fx-border-color: black;">
+                     <children>
+                        <TextField fx:id="VrachIDText" onAction="#PoiskIDVrach" prefHeight="26.0" prefWidth="164.0" />
+                     </children>
+                  </Pane>
+                  <Label layoutX="177.0" layoutY="48.0" text="Введите ID" />
+                  <Label layoutX="378.0" layoutY="48.0" text="Выберите ФИО" />
+                  <Label layoutX="554.0" layoutY="48.0" text="Выберите специальность" />
+                  <Label layoutX="733.0" layoutY="48.0" text="Выберите должность" />
+                  <Label layoutX="897.0" layoutY="48.0" text="Введите стаж работы" />
+                  <Label layoutX="568.0" text="Врачи">
+                     <font>
+                        <Font name="Times New Roman" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="MenuReturn2" layoutX="-1.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
+                  <Button fx:id="VrachDob" layoutX="99.0" mnemonicParsing="false" onAction="#DobVrach" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="VrachDobav" layoutX="199.0" mnemonicParsing="false" onAction="#DelVrach" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <TableView fx:id="Vrach" prefHeight="688.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="VrachID" editable="false" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="VrachFIO" minWidth="1.0" prefWidth="476.0" text="ФИО" />
+                  <TableColumn fx:id="VrachSpec" prefWidth="280.0" text="Специальность" />
+                  <TableColumn fx:id="VrachStaj" prefWidth="136.0" text="Стаж работы" />
+                  <TableColumn prefWidth="232.0" text="Должность" />
+               </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+      <BorderPane fx:id="Menu" prefHeight="804.0" prefWidth="1200.0" style="-fx-background-color: #989ea3;" visible="false">
+         <bottom>
+            <AnchorPane prefHeight="694.0" prefWidth="1200.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="SilkaPatient" layoutX="450.0" layoutY="56.0" mnemonicParsing="false" onAction="#SpPatient" prefHeight="100.0" prefWidth="300.0" text="Список пациентов">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="SilkaVrachi" layoutX="50.0" layoutY="56.0" mnemonicParsing="false" onAction="#SpVrach" prefHeight="100.0" prefWidth="300.0" text="Список врачей">
+                     <font>
+                        <Font name="Times New Roman" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="SilkaBolezn" layoutX="850.0" layoutY="56.0" mnemonicParsing="false" onAction="#SpDiag" prefHeight="100.0" prefWidth="300.0" text="Истории болезни">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DobPatient" layoutX="451.0" layoutY="204.0" mnemonicParsing="false" onAction="#DobPatient" prefHeight="100.0" prefWidth="300.0" text="Добавить пациента">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DobVrach" layoutX="50.0" layoutY="204.0" mnemonicParsing="false" onAction="#DobVrach" prefHeight="100.0" prefWidth="300.0" text="Добавить врача">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DobDiagnoz" layoutX="850.0" layoutY="204.0" mnemonicParsing="false" onAction="#DobDiag" prefHeight="100.0" prefWidth="300.0" text="Добавить диагноз">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DelPatient" layoutX="450.0" layoutY="352.0" mnemonicParsing="false" onAction="#DelPatient" prefHeight="100.0" prefWidth="300.0" text="Удалить пациента">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DelVrach" layoutX="50.0" layoutY="352.0" mnemonicParsing="false" onAction="#DelVrach" prefHeight="100.0" prefWidth="300.0" text="Удалить врача">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DelDiagnoz" layoutX="850.0" layoutY="352.0" mnemonicParsing="false" onAction="#DelDiag" prefHeight="100.0" prefWidth="300.0" text="Удалить диагноз">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </bottom>
+         <center>
+            <Label text="Главная страница" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Times New Roman" size="36.0" />
+               </font>
+            </Label>
+         </center></BorderPane>
+   </children>
+</AnchorPane>
