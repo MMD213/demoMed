@@ -1,14 +1,13 @@
 package com.example.demo.Base;
 
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Patient {
+public class Patient1 {
     int IdPatient;
     SimpleStringProperty InsurancePolicyNumber, MedicalBookNumber, FIO, PlaceOfResidence, DateOfBirth;
 
-    public Patient(int IdPatient1, String InsurancePolicyNumber1, String MedicalBookNumber1, String FIO1, String PlaceOfResidence1, String DateOfBirth1) {
+    public Patient1(int IdPatient1, String InsurancePolicyNumber1, String MedicalBookNumber1, String FIO1, String PlaceOfResidence1, String DateOfBirth1) {
         this.IdPatient = IdPatient1;
         this.InsurancePolicyNumber = new SimpleStringProperty(InsurancePolicyNumber1);
         this.MedicalBookNumber = new SimpleStringProperty(MedicalBookNumber1);

@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+<AnchorPane fx:id="ALL" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
    <children>
+
       <BorderPane fx:id="SpisokPatientov" prefHeight="800.0" prefWidth="1200.0" visible="false">
          <bottom>
-            <TableView fx:id="Patient" editable="true" prefHeight="600.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="Patient" editable="true" onMouseClicked="#MousePat" prefHeight="600.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="PatID" prefWidth="75.0" text="ID" />
                   <TableColumn fx:id="PatNomerPol" prefWidth="172.0" text="Номер страхового полиса" />
@@ -58,8 +67,8 @@
                      </font>
                   </Label>
                   <Button fx:id="MenuReturn1" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
-                  <Button fx:id="PatienntDob" layoutX="100.0" mnemonicParsing="false" onAction="#DobPatient" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
-                  <Button fx:id="PatienntDel" layoutX="200.0" mnemonicParsing="false" onAction="#DelPatient" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
+                  <Button fx:id="PatienntDob" layoutX="103.0" mnemonicParsing="false" onAction="#DobPatient" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="PatienntDel" layoutX="206.0" mnemonicParsing="false" onAction="#DelPatient" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
                   <TextField fx:id="PolsData" layoutX="306.0" layoutY="177.0" prefHeight="26.0" prefWidth="228.0" />
                   <TextField fx:id="PolsMesto" layoutX="36.0" layoutY="177.0" prefHeight="26.0" prefWidth="222.0" />
                   <TextField fx:id="NumPolOsn" layoutX="38.0" layoutY="108.0" prefHeight="26.0" prefWidth="225.0" />
@@ -71,7 +80,11 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="OBN1" layoutX="542.0" layoutY="163.0" mnemonicParsing="false" onAction="#Obn" prefHeight="41.0" prefWidth="102.0" text="Обновить" />
+                  <Button fx:id="OBN1" layoutX="542.0" layoutY="163.0" mnemonicParsing="false" onAction="#Obn" prefHeight="41.0" prefWidth="102.0" text="Обновить">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="IzmenPat" layoutX="309.0" layoutY="-1.0" mnemonicParsing="false" onAction="#Izmen" prefHeight="41.0" prefWidth="103.0" text="Изменить" />
                </children>
             </AnchorPane>
          </top>
@@ -121,8 +134,8 @@
                      </font>
                   </Label>
                   <Button fx:id="MenuReturn" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
-                  <Button fx:id="DiagDob" layoutX="100.0" mnemonicParsing="false" onAction="#DobDiag" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
-                  <Button fx:id="DiagDel" layoutX="200.0" layoutY="-2.0" mnemonicParsing="false" onAction="#DelDiag" prefHeight="41.0" prefWidth="102.0" text="Удалить" />
+                  <Button fx:id="DiagDob" layoutX="103.0" mnemonicParsing="false" onAction="#DobDiag" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="DiagDel" layoutX="206.0" layoutY="-2.0" mnemonicParsing="false" onAction="#DelDiag" prefHeight="41.0" prefWidth="102.0" text="Удалить" />
                   <Label layoutX="774.0" layoutY="126.0" text="Выберите статус">
                      <font>
                         <Font size="14.0" />
@@ -171,11 +184,11 @@
          <top>
             <AnchorPane prefHeight="141.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ComboBox fx:id="VrachFIOCombox" layoutX="378.0" layoutY="68.0" prefWidth="150.0" />
-                  <ComboBox fx:id="VrachSpecCombox" layoutX="554.0" layoutY="68.0" prefWidth="150.0" />
-                  <Label layoutX="177.0" layoutY="48.0" text="Введите ID" />
-                  <Label layoutX="378.0" layoutY="48.0" text="Выберите ФИО" />
-                  <Label layoutX="554.0" layoutY="48.0" text="Выберите специальность" />
+                  <ComboBox fx:id="VrachFIOCombox" layoutX="261.0" layoutY="68.0" prefHeight="25.0" prefWidth="235.0" />
+                  <ComboBox fx:id="VrachSpecCombox" layoutX="515.0" layoutY="68.0" prefHeight="25.0" prefWidth="204.0" />
+                  <Label layoutX="70.0" layoutY="48.0" text="Введите ID" />
+                  <Label layoutX="263.0" layoutY="49.0" text="Выберите ФИО" />
+                  <Label layoutX="515.0" layoutY="48.0" text="Выберите специальность" />
                   <Label layoutX="732.0" layoutY="49.0" text="Введите стаж работы" />
                   <Label layoutX="568.0" text="Врачи">
                      <font>
@@ -183,18 +196,19 @@
                      </font>
                   </Label>
                   <Button fx:id="MenuReturn2" layoutX="-1.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="39.0" prefWidth="100.0" text="Меню" />
-                  <Button fx:id="VrachDob" layoutX="99.0" mnemonicParsing="false" onAction="#DobVrach" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
-                  <Button fx:id="VrachDobav" layoutX="199.0" mnemonicParsing="false" onAction="#DelVrach" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
-                  <TextField fx:id="VrachIDText" layoutX="177.0" layoutY="68.0" prefHeight="26.0" prefWidth="164.0" />
+                  <Button fx:id="VrachDob" layoutX="102.0" mnemonicParsing="false" onAction="#DobVrach" prefHeight="39.0" prefWidth="100.0" text="Добавить" />
+                  <Button fx:id="VrachDobav" layoutX="205.0" mnemonicParsing="false" onAction="#DelVrach" prefHeight="39.0" prefWidth="100.0" text="Удалить" />
+                  <TextField fx:id="VrachIDText" layoutX="70.0" layoutY="68.0" prefHeight="26.0" prefWidth="164.0" />
                   <TextField fx:id="VrachStajText" layoutX="732.0" layoutY="69.0" prefHeight="26.0" prefWidth="127.0" />
                   <Button fx:id="PoiskVrach" layoutX="983.0" layoutY="61.0" mnemonicParsing="false" onAction="#poiskVracha" prefHeight="39.0" prefWidth="100.0" text="Поиск" />
                   <Button fx:id="OBN3" layoutX="868.0" layoutY="60.0" mnemonicParsing="false" onAction="#Obn" prefHeight="41.0" prefWidth="102.0" text="Обновить" />
-                  <TextField fx:id="VrachFIOText" layoutX="371.0" layoutY="100.0" prefHeight="26.0" prefWidth="164.0" />
+                  <TextField fx:id="VrachFIOText" layoutX="261.0" layoutY="97.0" prefHeight="26.0" prefWidth="235.0" />
+                  <Button fx:id="VrachIzmen" layoutX="308.0" mnemonicParsing="false" onAction="#Izmen" prefHeight="39.0" prefWidth="100.0" text="Изменить" />
                </children>
             </AnchorPane>
          </top>
          <center>
-            <TableView fx:id="Vrach" prefHeight="688.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="Vrach" onMouseClicked="#MouseVrach" prefHeight="688.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="VrachID" editable="false" prefWidth="246.0" text="ID" />
                   <TableColumn fx:id="VrachFIO" minWidth="1.0" prefWidth="453.0" text="ФИО" />
@@ -248,7 +262,7 @@
             </Label>
             <Pane layoutX="88.0" layoutY="91.0" prefHeight="675.0" prefWidth="1037.0" style="-fx-border-color: black;">
                <children>
-                  <TextField fx:id="FIODizgnosis" layoutX="38.0" layoutY="60.0" prefHeight="30.0" prefWidth="196.0">
+                  <TextField fx:id="FIODizgnosis" layoutX="38.0" layoutY="60.0" prefHeight="30.0" prefWidth="303.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -278,7 +292,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="SpecDizgnosis" layoutX="38.0" layoutY="10.0" prefHeight="30.0" prefWidth="196.0" text="Специалист: ">
+                  <TextField fx:id="SpecDizgnosis" layoutX="38.0" layoutY="10.0" prefHeight="30.0" prefWidth="303.0" text="Специалист: ">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -326,7 +340,9 @@
                   <Font size="18.0" />
                </font>
             </Button>
+            <Text fx:id="id" layoutX="929.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
          </children>
       </AnchorPane>
+
    </children>
 </AnchorPane>

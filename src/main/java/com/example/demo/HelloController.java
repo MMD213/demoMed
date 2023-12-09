@@ -33,7 +33,7 @@ public class HelloController {
     private ComboBox<String> DiagnosisStatus;
 
     @FXML
-    private TableView<Diagnosis> Diagnoz;
+    private TableView<Diagnosis1> Diagnoz;
 
     @FXML
     private TableColumn<?, ?> DiagnozData;
@@ -132,7 +132,7 @@ public class HelloController {
     private Button PatienntDob;
 
     @FXML
-    private TableView<com.example.demo.Base.Patient> Patient;
+    private TableView<Patient1> Patient;
 
     @FXML
     private Button Pechat;
@@ -180,10 +180,12 @@ public class HelloController {
     private TextField TreatmentDiagnosis;
 
     @FXML
-    private TableView<com.example.demo.Base.Vrach> Vrach;
+    private TableView<Vrach1> Vrach;
 
     @FXML
     private Button VrachDob;
+    @FXML
+    private Text id;
 
     @FXML
     private Button VrachDobav;
@@ -193,6 +195,10 @@ public class HelloController {
     private Button Obn2;
     @FXML
     private Button Obn3;
+    @FXML
+    private Button IzmenPat;
+    @FXML
+    private Button Menu5;
     @FXML
     private TextField DataDiz;
     @FXML
@@ -243,12 +249,12 @@ public class HelloController {
     @FXML
     void DelDiag(ActionEvent event) {
         try {
-            Connection connection  = DriverManager.getConnection(
+            Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("delete from diagnosis where IdDiagnosis ="+NumID.getText()+";");
+            statement.executeUpdate("delete from diagnosis where IdDiagnosis =" + NumID.getText() + ";");
             connection.close();
         } catch (SQLException e) {
 
@@ -259,12 +265,12 @@ public class HelloController {
     @FXML
     void DelPatient(ActionEvent event) {
         try {
-            Connection connection  = DriverManager.getConnection(
+            Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("delete from patient where IDPatient ="+Integer.parseInt(NumPolOsn.getText())+";");
+            statement.executeUpdate("delete from patient where IDPatient =" + Integer.parseInt(NumPolOsn.getText()) + ";");
             connection.close();
         } catch (SQLException e) {
 
@@ -275,12 +281,12 @@ public class HelloController {
     @FXML
     void DelVrach(ActionEvent event) {
         try {
-            Connection connection  = DriverManager.getConnection(
+            Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("delete from doctor where IDPatient ="+Integer.parseInt(VrachID.getText())+";");
+            statement.executeUpdate("delete from doctor where IDPatient =" + Integer.parseInt(VrachID.getText()) + ";");
             connection.close();
         } catch (SQLException e) {
 
@@ -292,41 +298,44 @@ public class HelloController {
     void DobDiag(ActionEvent event) {
         IstoriaBolezni.setVisible(false);
         DobavlenieDiagnoz.setVisible(true);
-        if(Diagnoz.getSelectionModel().isEmpty()){
+        if (Diagnoz.getSelectionModel().isEmpty()) {
             LocalDate currentDate = LocalDate.now();
+            id.setText("");
             SpecDizgnosis.setText("Специалист:");
             FIODizgnosis.setText("");
             DizgnosisComplaints.setText("");
             DiseaseDizgnosis.setText("");
             TreatmentDiagnosis.setText("");
             DiagnosisImprovement.setText("");
-            DiagnosisDateOfApplication.setText("Дата приёма:"+currentDate.toString());
+            DiagnosisDateOfApplication.setText("Дата приёма: " + currentDate.toString());
             try {
                 dataTable6 = ZapStatus();
                 StatusPoisk.getItems().clear();
-                for(int i=0;i<dataTable6.size();i++){
+                for (int i = 0; i < dataTable6.size(); i++) {
                     comboBox3.add(dataTable6.get(i).getCol2());
                 }
                 DiagnosisStatus.setItems(comboBox3);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
             }
-        }else {
-            SpecDizgnosis.setText("Специалист:"+dataTable4.get(0).getCol6());
+        } else {
+            id.setText(String.valueOf(dataTable4.get(0).getCol1()));
+            SpecDizgnosis.setText("Специалист:" + dataTable4.get(0).getCol6());
             FIODizgnosis.setText(dataTable4.get(0).getCol2());
             DizgnosisComplaints.setText(dataTable4.get(0).getCol7());
             DiseaseDizgnosis.setText(dataTable4.get(0).getCol4());
             TreatmentDiagnosis.setText(dataTable4.get(0).getCol5());
             DiagnosisImprovement.setText(dataTable4.get(0).getCol8());
-            DiagnosisDateOfApplication.setText("Дата приёма:"+dataTable4.get(0).getCol3());
+            DiagnosisDateOfApplication.setText("Дата приёма: " + dataTable4.get(0).getCol3());
             try {
                 dataTable6 = ZapStatus();
                 StatusPoisk.getItems().clear();
-                for(int i=0;i<dataTable6.size();i++){
+                for (int i = 0; i < dataTable6.size(); i++) {
                     comboBox3.add(dataTable6.get(i).getCol2());
                 }
                 DiagnosisStatus.setItems(comboBox3);
-            }catch (Exception e){
+                DiagnosisStatus.setValue(dataTable4.get(0).getCol9().toString());
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
@@ -335,46 +344,90 @@ public class HelloController {
     @FXML
     void Perehod(MouseEvent event) {
         dataTable4.clear();
-        Diagnosis selectedPerson = Diagnoz.getSelectionModel().getSelectedItem();
+        Diagnosis1 selectedPerson = Diagnoz.getSelectionModel().getSelectedItem();
         dataTable4.add(selectedPerson);
+    }
 
+
+    @FXML
+    void Pechat(ActionEvent event) {
+       MedSpravka.med(FIODizgnosis.getText(),SpecDizgnosis.getText(),DizgnosisComplaints.getText(),DiseaseDizgnosis.getText(),TreatmentDiagnosis.getText());
 
     }
     @FXML
-    void Pechat(ActionEvent event) {
-
+    void MouseVrach(MouseEvent event) {
+        dataTableIZV.clear();
+        Vrach1 selectedPerson = Vrach.getSelectionModel().getSelectedItem();
+        dataTableIZV.add(selectedPerson);
+        VrachIDText.setText(String.valueOf(dataTableIZV.get(0).getCol1()));
+        VrachFIOCombox.setValue(String.valueOf(dataTableIZV.get(0).getCol2()));
+        VrachSpecCombox.setValue((dataTableIZV.get(0).getCol3()));
+        VrachStajText.setText(String.valueOf(dataTableIZV.get(0).getCol4()));
+    }
+    @FXML
+    void MousePat(MouseEvent event) {
+        dataTableIZP.clear();
+        Patient1 selectedPerson = Patient.getSelectionModel().getSelectedItem();
+        dataTableIZP.add(selectedPerson);
+        NumPolOsn.setText(String.valueOf(dataTableIZP.get(0).getCol1()));
+        NumStrash.setText(dataTableIZP.get(0).getCol2());
+        NumMedBook.setText(dataTableIZP.get(0).getCol3());
+        PolFIO.setText(dataTableIZP.get(0).getCol4());
+        PolsMesto.setText(dataTableIZP.get(0).getCol5());
+        PolsData.setText(dataTableIZP.get(0).getCol6());
     }
 
     @FXML
     void Save(ActionEvent event) {
+
         String originalString = SpecDizgnosis.getText();
-        String textToRemove = "Специалист:";
+        String textToRemove = "Специалист: ";
         String originalString1 = DiagnosisDateOfApplication.getText();
-        String textToRemove1 = "Дата приёма:";
+        String textToRemove1 = "Дата приёма: ";
         String Vrach = originalString.replace(textToRemove, "");
         String Dat = originalString1.replace(textToRemove1, "");
-        try {
-            Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
-            Statement statement = connection.createStatement();
 
-            statement.executeUpdate("INSERT INTO Diagnosis (Patient, DateOfApplication, Disease, Treatment, Doctor, Complaints, Improvement, Status) " +
-                    "VALUES ((SELECT IdPatient FROM Patient WHERE FIO ='"+FIODizgnosis.getText()+"'),'"+Dat+"','"+DiseaseDizgnosis.getText()+"','"+TreatmentDiagnosis.getText()+"',"+
-                    "(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='"+Vrach+"'),'"+DizgnosisComplaints.getText()+"','"+DiagnosisImprovement.getText()+"', " +
-                    "(SELECT StatusID FROM Status WHERE Name ='"+DiagnosisStatus.getValue()+"' ));");
-            connection.close();
-        } catch (SQLException e) {
+        if (id.getText().isEmpty()) {
+            try {
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/med",
+                        "root", "1234");
+                Statement statement = connection.createStatement();
 
-            throw new RuntimeException("Error while executing SQL query", e);
+                String a=("INSERT INTO Diagnosis (Patient, DateOfApplication, Disease, Treatment, Doctor, Complaints, Improvement, Status) " +
+                        "VALUES ((SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() + "'),'" + Dat + "','" + DiseaseDizgnosis.getText() + "','" + TreatmentDiagnosis.getText() + "'," +
+                        "(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),'" + DizgnosisComplaints.getText() + "','" + DiagnosisImprovement.getText() + "', " +
+                        "(SELECT IDStatus FROM Status WHERE Name ='" + DiagnosisStatus.getValue() + "' ));");
+
+                System.out.println(a);
+                statement.executeUpdate(a);
+                connection.close();
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error while executing SQL query", e);
+            }
+        } else {
+
+
+            try {
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/med",
+                        "root", "1234");
+                Statement statement = connection.createStatement();
+
+                statement.executeUpdate("UPDATE Diagnosis " +
+                        "Set Patient= (SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() + "'), DateOfApplication='" + Dat + "', Disease='" + DiseaseDizgnosis.getText() + "',Treatment='" + TreatmentDiagnosis.getText() + "'," +
+                        "Doctor=(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),Complaints='" + DizgnosisComplaints.getText() + "',Improvement='" + DiagnosisImprovement.getText() + "', " +
+                        "Status= (SELECT IDStatus FROM Status WHERE Name ='" + DiagnosisStatus.getValue() + "' ) Where IdDiagnosis="+id.getText()+";");
+                connection.close();
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error while executing SQL query", e);
+            }
         }
     }
 
-    @FXML
-    void Perehod(ActionEvent event) {
-        DobavlenieDiagnoz.setVisible(true);
-        IstoriaBolezni.setVisible(false);
-    }
+
     @FXML
     void DobPatient(ActionEvent event) {
         try {
@@ -473,7 +526,7 @@ public class HelloController {
     void PoisDiagnoza(ActionEvent event) {
         String a=null;
         String b="";
-        ObservableList<Diagnosis> diagnoz = FXCollections.observableArrayList();
+        ObservableList<Diagnosis1> diagnoz = FXCollections.observableArrayList();
         if(!NumID.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
             b+=" IdDiagnosis="+NumID.getText();
@@ -481,31 +534,31 @@ public class HelloController {
         }
         if(!NumFIO.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" FIO="+NumFIO.getText();
+            b+=" FIO='"+NumFIO.getText()+"'";
 
         }
         if(!DataDiz.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" DateOfApplication="+DataDiz.getText();
+            b+=" DateOfApplication='"+DataDiz.getText()+"'";
 
         }
         if(!Zabol.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" Disease= LIKE '"+Zabol.getText()+"'";
+            b+=" Disease LIKE '%"+Zabol.getText()+"%'";
 
         }
         if(!LechDiz.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" Treatment LIKE'"+LechDiz.getText()+"'";
+            b+=" Treatment LIKE'%"+LechDiz.getText()+"%'";
 
         }
         if(!JalobDiz.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" Complaints Like'"+JalobDiz.getText()+"'";
+            b+=" Complaints Like'%"+JalobDiz.getText()+"%'";
         }
         if(!ULUCDIZ.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" Improvement='"+ULUCDIZ.getText()+"'";
+            b+=" Improvement Like'%"+ULUCDIZ.getText()+"%'";
         }
         if(!VrachPoisk.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
@@ -513,7 +566,7 @@ public class HelloController {
         }
         if(StatusPoisk.getValue()!=null){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" Status.Name like'"+StatusPoisk.getValue()+"'";
+            b+=" Status.Name ='"+StatusPoisk.getValue()+"'";
         }
 
 
@@ -522,12 +575,12 @@ public class HelloController {
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
-            a="SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.StatusID where "+b+" ;";
+            a="SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.IDStatus where "+b+" ;";
             System.out.println(a);
 
             ResultSet results = statement.executeQuery(a);
             while (results.next()) {
-                diagnoz.add(new Diagnosis(results.getInt("IDDiagnosis"), results.getString("FIO"),
+                diagnoz.add(new Diagnosis1(results.getInt("IDDiagnosis"), results.getString("FIO"),
                         results.getString("DateOfApplication"), results.getString("Disease"), results.getString("Treatment")
                         , results.getString("FIOVrach"), results.getString("Complaints"), results.getString("Improvement"), results.getString("Name")));
             }
@@ -558,7 +611,7 @@ public class HelloController {
     void PoiskPatienta(ActionEvent event) {
         String a=null;
         String b="";
-        ObservableList<Patient> patients1 = FXCollections.observableArrayList();
+        ObservableList<Patient1> patients1 = FXCollections.observableArrayList();
         if(!NumPolOsn.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
         b+=" IdPatient="+NumPolOsn.getText();
@@ -581,7 +634,7 @@ public class HelloController {
         }
         if(!PolsMesto.getText().toString().isEmpty()){
             if(!b.isEmpty()){b+=" AND ";}
-            b+=" PlaceOfResidence="+PolsMesto.getText();
+            b+=" PlaceOfResidence='"+PolsMesto.getText()+"'";
 
         }
         if(!PolsData.getText().toString().isEmpty()){
@@ -595,11 +648,10 @@ public class HelloController {
                     "root", "1234");
             Statement statement = connection.createStatement();
             a="select*from patient where "+b+" ;";
-            System.out.println(a);
 
             ResultSet results = statement.executeQuery(a);
             while (results.next()) {
-                patients1.add(new Patient(results.getInt("IdPatient"), results.getString("InsurancePolicyNumber"),
+                patients1.add(new Patient1(results.getInt("IdPatient"), results.getString("InsurancePolicyNumber"),
                         results.getString("MedicalBookNumber"), results.getString("FIO"),
                         results.getString("PlaceOfResidence"), results.getString("DateOfBirth")));
             }
@@ -648,12 +700,16 @@ public class HelloController {
             System.out.println(e);
         }
     }
-    private ObservableList<Patient> dataTable = FXCollections.observableArrayList();
-    private ObservableList<Vrach> dataTable2 = FXCollections.observableArrayList();
-    private ObservableList<Diagnosis> dataTable3 = FXCollections.observableArrayList();
-    private ObservableList<Diagnosis> dataTable4 = FXCollections.observableArrayList();
-    private ObservableList<Specialty> dataTable5 = FXCollections.observableArrayList();
-    private ObservableList<Status> dataTable6 = FXCollections.observableArrayList();
+    private ObservableList<Patient1> dataTable = FXCollections.observableArrayList();
+    private ObservableList<Vrach1> dataTable2 = FXCollections.observableArrayList();
+
+    private ObservableList<Patient1> dataTableIZP = FXCollections.observableArrayList();
+    private ObservableList<Vrach1> dataTableIZV = FXCollections.observableArrayList();
+
+    private ObservableList<Diagnosis1> dataTable3 = FXCollections.observableArrayList();
+    private ObservableList<Diagnosis1> dataTable4 = FXCollections.observableArrayList();
+    private ObservableList<Specialty1> dataTable5 = FXCollections.observableArrayList();
+    private ObservableList<Status1> dataTable6 = FXCollections.observableArrayList();
     @FXML
     void SpPatient(ActionEvent event) {
         Menu.setVisible(false);
@@ -711,6 +767,10 @@ public class HelloController {
     void Vihod(ActionEvent event) {
         System.exit(0);
     }
+    @FXML
+    void Izmen(ActionEvent event) {
+
+    }
 
     @FXML
     void poiskVracha(ActionEvent event) {
@@ -725,21 +785,24 @@ public class HelloController {
     SpisokPatientov.setVisible(false);
     DobavlenieDiagnoz.setVisible(false);
     }
-
+    @FXML
+    private AnchorPane ALL;
     @FXML
     private void initialize() {
+        ObservableList<String> stylesheets = ALL.getStylesheets();
+        stylesheets.add(getClass().getResource("styles.css").toExternalForm());
 
     }
-    public ObservableList<Patient> ZapPat() {
+    public ObservableList<Patient1> ZapPat() {
         try {
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
-            ObservableList<Patient> patients1 = FXCollections.observableArrayList();
+            ObservableList<Patient1> patients1 = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM patient");
             while (results.next()) {
-                patients1.add(new Patient(results.getInt("IdPatient"), results.getString("InsurancePolicyNumber"),
+                patients1.add(new Patient1(results.getInt("IdPatient"), results.getString("InsurancePolicyNumber"),
                         results.getString("MedicalBookNumber"), results.getString("FIO"),
                         results.getString("PlaceOfResidence"), results.getString("DateOfBirth")));
             }
@@ -749,16 +812,16 @@ public class HelloController {
             throw new RuntimeException("Error while executing SQL query", e);
         }
     }
-    public ObservableList<Specialty> ZapSpec() {
+    public ObservableList<Specialty1> ZapSpec() {
         try {
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
-            ObservableList<Specialty> specialties = FXCollections.observableArrayList();
+            ObservableList<Specialty1> specialties = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM Specialty");
             while (results.next()) {
-                specialties.add(new Specialty(results.getInt("IdSpecialty"), results.getString("SpecialtyName")));
+                specialties.add(new Specialty1(results.getInt("IdSpecialty"), results.getString("SpecialtyName")));
             }
             connection.close();
             return specialties;
@@ -766,16 +829,16 @@ public class HelloController {
             throw new RuntimeException("Error while executing SQL query", e);
         }
     }
-    public ObservableList<Status> ZapStatus() {
+    public ObservableList<Status1> ZapStatus() {
         try {
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
-            ObservableList<Status> statuses = FXCollections.observableArrayList();
+            ObservableList<Status1> statuses = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM status");
             while (results.next()) {
-                statuses.add(new Status(results.getInt("StatusID"), results.getString("Name")));
+                statuses.add(new Status1(results.getInt("IDStatus"), results.getString("Name")));
             }
             connection.close();
             return statuses;
@@ -783,20 +846,20 @@ public class HelloController {
             throw new RuntimeException("Error while executing SQL query", e);
         }
     }
-    public ObservableList<Vrach> ZapVrach() {
+    public ObservableList<Vrach1> ZapVrach() {
         try {
 
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
 
-            ObservableList<Vrach> vraches = FXCollections.observableArrayList();
+            ObservableList<Vrach1> vraches = FXCollections.observableArrayList();
 
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT Doctor.IdDoctor, Doctor.FIOVrach, Specialty.SpecialtyName, Doctor.WorkExperience FROM Doctor INNER JOIN Specialty ON Doctor.Specialty = Specialty.IdSpecialty;");
 
             while (results.next()) {
-                vraches.add(new Vrach(results.getInt("IdDoctor"), results.getString("FIOVrach"),
+                vraches.add(new Vrach1(results.getInt("IdDoctor"), results.getString("FIOVrach"),
                         results.getString("SpecialtyName")
                         ,results.getFloat("WorkExperience")));
 
@@ -807,22 +870,21 @@ public class HelloController {
             throw new RuntimeException(e);
         }
     }
-        public ObservableList<Diagnosis> ZapDiagnosis() {
+        public ObservableList<Diagnosis1> ZapDiagnosis() {
             try {
 
                 Connection connection  = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/med",
                         "root", "1234");
 
-                ObservableList<Diagnosis> diagnoses = FXCollections.observableArrayList();
+                ObservableList<Diagnosis1> diagnoses = FXCollections.observableArrayList();
 
                 Statement statement = connection.createStatement();
-                ResultSet results = statement.executeQuery("SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.StatusID;");
+                ResultSet results = statement.executeQuery("SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.IDStatus;");
                 while (results.next()) {
-                    diagnoses.add(new Diagnosis(results.getInt("IDDiagnosis"), results.getString("FIO"),
+                    diagnoses.add(new Diagnosis1(results.getInt("IDDiagnosis"), results.getString("FIO"),
                             results.getString("DateOfApplication"),results.getString("Disease"),results.getString("Treatment")
                             ,results.getString("FIOVrach"),results.getString("Complaints"),results.getString("Improvement"),results.getString("Name")));
-
                 }
                 connection.close();
                 return diagnoses;

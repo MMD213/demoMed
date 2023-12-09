@@ -1,14 +1,13 @@
 package com.example.demo.Base;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 
-public class Vrach {
+public class Vrach1 {
     int IdVrach;
     SimpleStringProperty FIOVrach,SpecialnostVrach;
     float Staj;
 
-    public Vrach(int idVrach1, String FIOVrach1, String specialnostVrach1,  Float staj1) {
+    public Vrach1(int idVrach1, String FIOVrach1, String specialnostVrach1, Float staj1) {
         this.IdVrach = idVrach1;
         this.FIOVrach =new SimpleStringProperty(FIOVrach1);
         this.SpecialnostVrach = new SimpleStringProperty(specialnostVrach1);

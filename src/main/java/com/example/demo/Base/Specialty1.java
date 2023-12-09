@@ -2,11 +2,11 @@ package com.example.demo.Base;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Specialty {
+public class Specialty1 {
     int IdSpecialty;
     SimpleStringProperty SpecialtyName;
 
-    public Specialty(int idSpecialty, String specialtyName) {
+    public Specialty1(int idSpecialty, String specialtyName) {
         this.IdSpecialty = idSpecialty;
         this.SpecialtyName =new SimpleStringProperty(specialtyName);
     }
