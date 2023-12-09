@@ -1,0 +1,60 @@
+/* Стили для BorderPane */
+#SpisokPatientov, #IstoriaBolezni, #Vrachi, #Menu, #DobavlenieDiagnoz {
+    -fx-background-color: #e0e0e0; /* Серый цвет фона */
+}
+
+/* Стили для TableView */
+#Patient, #Diagnoz, #Vrach {
+    -fx-control-inner-background: #ffffff; /* Белый цвет фона внутри ячеек таблицы */
+}
+
+/* Стили для кнопок */
+/* Стили для кнопок */
+#MenuReturn1, #PatienntDob, #PatienntDel, #PoiskPatient, #OBN1,
+#MenuReturn, #DiagDob, #DiagDel, #PoiskDiagnosis, #OBN2,
+#MenuReturn2, #VrachDob, #VrachDobav, #PoiskVrach, #OBN3,
+#SilkaPatient, #SilkaVrachi, #SilkaBolezn, #Exit, #Menu5, #SohranDiagnosis, #Pechat,
+#IzmenPat, #DiagIzmen,#VrachIzmen {
+    -fx-background-color: #4CAF50; /* Зеленый цвет фона кнопок */
+    -fx-text-fill: #ffffff; /* Белый цвет текста кнопок */
+    -fx-border-color: #333333; /* Темно-серый цвет обводки кнопок */
+    -fx-border-width: 2; /* Ширина обводки кнопок */
+    -fx-border-radius: 5; /* Радиус скругления углов обводки */
+}
+
+/* Стили для ComboBox */
+#StatusPoisk, #DiagnosisStatus, #VrachFIOCombox, #VrachSpecCombox {
+    -fx-background-color: #ffffff; /* Белый цвет фона выпадающего списка */
+    -fx-border-color: #333333; /* Темно-серый цвет обводки выпадающего списка */
+    -fx-border-width: 1; /* Ширина обводки выпадающего списка */
+}
+
+/* Стили для Label */
+#SpisokPatientov Label, #IstoriaBolezni Label, #Vrachi Label, #Menu Label, #DobavlenieDiagnoz Label {
+    -fx-text-fill: #333333; /* Темно-серый цвет текста меток */
+}
+
+/* Стили для текстовых полей */
+#PolsData, #PolsMesto, #NumPolOsn, #NumStrash, #NumMedBook, #PolFIO,
+#VrachIDText, #VrachStajText, #VrachFIOText,
+#FIODizgnosis, #DiseaseDizgnosis, #TreatmentDiagnosis, #SpecDizgnosis, #DizgnosisComplaints, #DiagnosisImprovement,
+#JalobDiz, #ULUCDIZ, #LechDiz, #NumID, #DataDiz,
+#VrachFIO, #VrachSpec, #VrachStaj, #VrachID, #DiagnozID, #DiagnozPatient, #DiagnozData, #DiagnozJaloba, #DiagnozZabolevanie, #DiagnozYlychenie, #DiagnozLechenie, #DiagnozVrach, #Status {
+    -fx-control-inner-background: #ffffff; /* Белый цвет фона текстовых полей */
+}
+
+/* Стили для TableView в режиме редактирования */
+#Patient .table-cell, #Diagnoz .table-cell, #Vrach .table-cell {
+    -fx-control-inner-background: #ffffff; /* Белый цвет фона ячеек в режиме редактирования */
+}
+
+/* Стили для TableView при наведении */
+#Patient .table-row-cell:hover, #Diagnoz .table-row-cell:hover, #Vrach .table-row-cell:hover {
+    -fx-background-color: #f0f0f0; /* Светло-серый цвет фона при наведении на строку таблицы */
+}
+
+/* Стили для TableView при выделении */
+#Patient .table-row-cell:selected, #Diagnoz .table-row-cell:selected, #Vrach .table-row-cell:selected {
+    -fx-background-color: #4CAF50; /* Зеленый цвет фона при выделении строки таблицы */
+    -fx-text-fill: #ffffff; /* Белый цвет текста при выделении строки таблицы */
+}

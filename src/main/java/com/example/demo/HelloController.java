@@ -436,7 +436,7 @@ public class HelloController {
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("insert into patient (InsurancePolicyNumber,MedicalBookNumber,FIO,PlaceOfResidence,DateOfBirth) values ("+NumStrash.getText().toString()+", "+NumMedBook.getText().toString()+", '"+PolFIO.getText().toString()+"', '"+PolsMesto.getText().toString()+"', '"+ PolsData.getText().toString()+"');");
+            statement.executeUpdate("insert into patient (InsurancePolicyNumber,MedicalBookNumber,FIO,PlaceOfResidence,DateOfBirth) values ("+NumStrash.getText()+", "+NumMedBook.getText()+", '"+PolFIO.getText()+"', '"+PolsMesto.getText()+"', '"+ PolsData.getText()+"');");
             connection.close();
         } catch (SQLException e) {
 
@@ -516,7 +516,29 @@ public class HelloController {
             }
             VrachFIOCombox.setItems(comboBox1);
             VrachSpecCombox.setItems(comboBox2);
+            VrachFIOCombox.setValue("");
+            VrachSpecCombox.setValue("");
+            StatusPoisk.setValue("");
 
+            NumPolOsn.setText("");
+            NumStrash.setText("");
+            NumMedBook.setText("");
+            PolFIO.setText("");
+            PolsMesto.setText("");
+            PolsData.setText("");
+
+            NumID.setText("");
+            NumFIO.setText("");
+            DataDiz.setText("");
+            JalobDiz.setText("");
+            Zabol.setText("");
+            ULUCDIZ.setText("");
+            LechDiz.setText("");
+            VrachPoisk.setText("");
+
+            VrachIDText.setText("");
+            VrachStajText.setText("");
+            VrachFIOText.setText("");
         }catch (Exception e){
             System.out.println(e);
         }
@@ -770,6 +792,35 @@ public class HelloController {
     @FXML
     void Izmen(ActionEvent event) {
 
+    if(SpisokPatientov.isVisible() == true){
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/med",
+                    "root", "1234");
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("UPDATE patient " +
+                    "Set InsurancePolicyNumber= '"+NumStrash.getText()+"',MedicalBookNumber='"+NumMedBook.getText()+"',FIO='"+PolFIO.getText()+"',PlaceOfResidence='"+PolsMesto.getText()+"',DateOfBirth='"+PolsData.getText()+"' Where IdPatient="+NumPolOsn.getText()+";");
+            connection.close();
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error while executing SQL query", e);
+        }
+    }
+    if(Vrachi.isVisible() == true){
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/med",
+                    "root", "1234");
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOCombox.getValue()+"',Specialty=(SELECT IdSpecialty FROM Specialty WHERE SpecialtyName ='"+VrachSpecCombox.getValue()+"'),WorkExperience="+VrachStajText.getText()+" ;");
+            connection.close();
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error while executing SQL query", e);
+        }
+    }
     }
 
     @FXML
