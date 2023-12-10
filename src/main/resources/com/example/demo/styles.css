@@ -39,7 +39,8 @@
 #VrachIDText, #VrachStajText, #VrachFIOText,
 #FIODizgnosis, #DiseaseDizgnosis, #TreatmentDiagnosis, #SpecDizgnosis, #DizgnosisComplaints, #DiagnosisImprovement,
 #JalobDiz, #ULUCDIZ, #LechDiz, #NumID, #DataDiz,
-#VrachFIO, #VrachSpec, #VrachStaj, #VrachID, #DiagnozID, #DiagnozPatient, #DiagnozData, #DiagnozJaloba, #DiagnozZabolevanie, #DiagnozYlychenie, #DiagnozLechenie, #DiagnozVrach, #Status {
+#VrachFIO, #VrachSpec, #VrachStaj, #VrachID, #DiagnozID, #DiagnozPatient, #DiagnozData, #DiagnozJaloba, #DiagnozZabolevanie,
+#DiagnozYlychenie, #DiagnozLechenie, #DiagnozVrach, #Status {
     -fx-control-inner-background: #ffffff; /* Белый цвет фона текстовых полей */
 }
 

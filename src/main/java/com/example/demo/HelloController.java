@@ -286,7 +286,7 @@ public class HelloController {
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("delete from doctor where IDPatient =" + Integer.parseInt(VrachID.getText()) + ";");
+            statement.executeUpdate("delete from doctor where IdDoctor =" + VrachIDText.getText()+ ";");
             connection.close();
         } catch (SQLException e) {
 
@@ -340,19 +340,17 @@ public class HelloController {
             }
         }
     }
-
+    @FXML
+    void Pechat(ActionEvent event) {
+        MedSpravka.med(FIODizgnosis.getText(),SpecDizgnosis.getText(),DizgnosisComplaints.getText()
+                ,DiseaseDizgnosis.getText(),TreatmentDiagnosis.getText());
+        MedSpravka.openPdf("MedicalDocument");
+    }
     @FXML
     void Perehod(MouseEvent event) {
         dataTable4.clear();
         Diagnosis1 selectedPerson = Diagnoz.getSelectionModel().getSelectedItem();
         dataTable4.add(selectedPerson);
-    }
-
-
-    @FXML
-    void Pechat(ActionEvent event) {
-       MedSpravka.med(FIODizgnosis.getText(),SpecDizgnosis.getText(),DizgnosisComplaints.getText(),DiseaseDizgnosis.getText(),TreatmentDiagnosis.getText());
-
     }
     @FXML
     void MouseVrach(MouseEvent event) {
@@ -395,8 +393,10 @@ public class HelloController {
                 Statement statement = connection.createStatement();
 
                 String a=("INSERT INTO Diagnosis (Patient, DateOfApplication, Disease, Treatment, Doctor, Complaints, Improvement, Status) " +
-                        "VALUES ((SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() + "'),'" + Dat + "','" + DiseaseDizgnosis.getText() + "','" + TreatmentDiagnosis.getText() + "'," +
-                        "(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),'" + DizgnosisComplaints.getText() + "','" + DiagnosisImprovement.getText() + "', " +
+                        "VALUES ((SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() + "'),'" + Dat
+                        + "','" + DiseaseDizgnosis.getText() + "','" + TreatmentDiagnosis.getText() + "'," +
+                        "(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),'" + DizgnosisComplaints.getText() +
+                        "','" + DiagnosisImprovement.getText() + "', " +
                         "(SELECT IDStatus FROM Status WHERE Name ='" + DiagnosisStatus.getValue() + "' ));");
 
                 System.out.println(a);
@@ -407,8 +407,6 @@ public class HelloController {
                 throw new RuntimeException("Error while executing SQL query", e);
             }
         } else {
-
-
             try {
                 Connection connection = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/med",
@@ -416,8 +414,11 @@ public class HelloController {
                 Statement statement = connection.createStatement();
 
                 statement.executeUpdate("UPDATE Diagnosis " +
-                        "Set Patient= (SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() + "'), DateOfApplication='" + Dat + "', Disease='" + DiseaseDizgnosis.getText() + "',Treatment='" + TreatmentDiagnosis.getText() + "'," +
-                        "Doctor=(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),Complaints='" + DizgnosisComplaints.getText() + "',Improvement='" + DiagnosisImprovement.getText() + "', " +
+                        "Set Patient= (SELECT IdPatient FROM Patient WHERE FIO ='" + FIODizgnosis.getText() +
+                        "'), DateOfApplication='" + Dat + "', Disease='" + DiseaseDizgnosis.getText() +
+                        "',Treatment='" + TreatmentDiagnosis.getText() + "'," +
+                        "Doctor=(SELECT IdDoctor FROM Doctor WHERE FIOVrach ='" + Vrach + "'),Complaints='" +
+                        DizgnosisComplaints.getText() + "',Improvement='" + DiagnosisImprovement.getText() + "', " +
                         "Status= (SELECT IDStatus FROM Status WHERE Name ='" + DiagnosisStatus.getValue() + "' ) Where IdDiagnosis="+id.getText()+";");
                 connection.close();
             } catch (SQLException e) {
@@ -436,7 +437,9 @@ public class HelloController {
                     "root", "1234");
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("insert into patient (InsurancePolicyNumber,MedicalBookNumber,FIO,PlaceOfResidence,DateOfBirth) values ("+NumStrash.getText()+", "+NumMedBook.getText()+", '"+PolFIO.getText()+"', '"+PolsMesto.getText()+"', '"+ PolsData.getText()+"');");
+            statement.executeUpdate("insert into patient (InsurancePolicyNumber,MedicalBookNumber,FIO,PlaceOfResidence,DateOfBirth) " +
+                    "values ("+NumStrash.getText()+", "+NumMedBook.getText()+", '"+PolFIO.getText()+
+                    "', '"+PolsMesto.getText()+"', '"+ PolsData.getText()+"');");
             connection.close();
         } catch (SQLException e) {
 
@@ -452,13 +455,11 @@ public class HelloController {
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
-
-            statement.executeUpdate("insert into doctor (FIOVrach,Specialty,WorkExperience) values ('"+VrachFIOText.getText()+"', (SELECT IdSpecialty FROM Specialty WHERE SpecialtyName='"+VrachSpecCombox.getValue()+"'),"+VrachStajText.getText()+");");
+            statement.executeUpdate("insert into doctor (FIOVrach,Specialty,WorkExperience) values ('"+VrachFIOText.getText()+
+                    "', (SELECT IdSpecialty FROM Specialty WHERE SpecialtyName='"+VrachSpecCombox.getValue()+"'),"+VrachStajText.getText()+");");
             connection.close();
         } catch (SQLException e) {
-
             throw new RuntimeException(e);
-
         }
     }
     @FXML
@@ -510,16 +511,11 @@ public class HelloController {
 
             Vrach.setItems(dataTable2);
             dataTable5=ZapSpec();
-            for(int i=0;i<dataTable2.size();i++){
-                comboBox1.add(dataTable2.get(i).getCol2());
-                comboBox2.add(dataTable5.get(i).getCol2());
-            }
-            VrachFIOCombox.setItems(comboBox1);
-            VrachSpecCombox.setItems(comboBox2);
+
             VrachFIOCombox.setValue("");
             VrachSpecCombox.setValue("");
             StatusPoisk.setValue("");
-
+            VrachIDText.setText("");
             NumPolOsn.setText("");
             NumStrash.setText("");
             NumMedBook.setText("");
@@ -539,6 +535,12 @@ public class HelloController {
             VrachIDText.setText("");
             VrachStajText.setText("");
             VrachFIOText.setText("");
+            for(int i=0;i<dataTable2.size();i++){
+                comboBox1.add(dataTable2.get(i).getCol2());
+                comboBox2.add(dataTable5.get(i).getCol2());
+            }
+            VrachFIOCombox.setItems(comboBox1);
+            VrachSpecCombox.setItems(comboBox2);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -590,26 +592,25 @@ public class HelloController {
             if(!b.isEmpty()){b+=" AND ";}
             b+=" Status.Name ='"+StatusPoisk.getValue()+"'";
         }
-
-
         try {
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
             Statement statement = connection.createStatement();
-            a="SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.IDStatus where "+b+" ;";
-            System.out.println(a);
+            a="SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment," +
+                    " Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient" +
+                    " = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = " +
+                    "Status.IDStatus where "+b+" ;";
 
             ResultSet results = statement.executeQuery(a);
             while (results.next()) {
                 diagnoz.add(new Diagnosis1(results.getInt("IDDiagnosis"), results.getString("FIO"),
                         results.getString("DateOfApplication"), results.getString("Disease"), results.getString("Treatment")
-                        , results.getString("FIOVrach"), results.getString("Complaints"), results.getString("Improvement"), results.getString("Name")));
+                        , results.getString("FIOVrach"), results.getString("Complaints"),
+                        results.getString("Improvement"), results.getString("Name")));
             }
             } catch (SQLException e) {
-
             throw new RuntimeException("Error while executing SQL query", e);
-
         }
         try {
             dataTable3 = diagnoz;
@@ -748,7 +749,6 @@ public class HelloController {
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
     ObservableList<String> comboBox1 = FXCollections.observableArrayList();
     ObservableList<String> comboBox2 = FXCollections.observableArrayList();
@@ -782,7 +782,6 @@ public class HelloController {
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
 
     @FXML
@@ -800,7 +799,9 @@ public class HelloController {
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("UPDATE patient " +
-                    "Set InsurancePolicyNumber= '"+NumStrash.getText()+"',MedicalBookNumber='"+NumMedBook.getText()+"',FIO='"+PolFIO.getText()+"',PlaceOfResidence='"+PolsMesto.getText()+"',DateOfBirth='"+PolsData.getText()+"' Where IdPatient="+NumPolOsn.getText()+";");
+                    "Set InsurancePolicyNumber= '"+NumStrash.getText()+"',MedicalBookNumber='"+
+                    NumMedBook.getText()+"',FIO='"+PolFIO.getText()+"',PlaceOfResidence='"+PolsMesto.getText()+
+                    "',DateOfBirth='"+PolsData.getText()+"' Where IdPatient="+NumPolOsn.getText()+";");
             connection.close();
         } catch (SQLException e) {
 
@@ -808,26 +809,41 @@ public class HelloController {
         }
     }
     if(Vrachi.isVisible() == true){
-        try {
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
-            Statement statement = connection.createStatement();
+        if(VrachFIOCombox.getValue()!=""){
+            try {
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/med",
+                        "root", "1234");
+                Statement statement = connection.createStatement();
 
-            statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOCombox.getValue()+"',Specialty=(SELECT IdSpecialty FROM Specialty WHERE SpecialtyName ='"+VrachSpecCombox.getValue()+"'),WorkExperience="+VrachStajText.getText()+" ;");
-            connection.close();
-        } catch (SQLException e) {
+                statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOCombox.getValue()+
+                        "',Specialty=(SELECT IdSpecialty FROM Specialty WHERE SpecialtyName ='"+VrachSpecCombox.getValue()+
+                        "'),WorkExperience="+VrachStajText.getText()+" where  IdDoctor="+VrachIDText.getText()+";");
+                connection.close();
+            } catch (SQLException e) {
 
-            throw new RuntimeException("Error while executing SQL query", e);
+                throw new RuntimeException("Error while executing SQL query", e);
+            }
         }
+        if(VrachFIOText.getText()!=""){
+            try {
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/med",
+                        "root", "1234");
+                Statement statement = connection.createStatement();
+
+                statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOText.getText()+
+                        "',Specialty=(SELECT IdSpecialty FROM Specialty WHERE SpecialtyName ='"+VrachSpecCombox.getValue()+
+                        "'),WorkExperience="+VrachStajText.getText()+"where  IdDoctor="+VrachIDText.getText()+";");
+                connection.close();
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error while executing SQL query", e);
+            }
+        }
+
     }
     }
-
-    @FXML
-    void poiskVracha(ActionEvent event) {
-
-    }
-
     @FXML
     void returnMenu(ActionEvent event) {
     Menu.setVisible(true);
@@ -899,21 +915,20 @@ public class HelloController {
     }
     public ObservableList<Vrach1> ZapVrach() {
         try {
-
             Connection connection  = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/med",
                     "root", "1234");
 
             ObservableList<Vrach1> vraches = FXCollections.observableArrayList();
-
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT Doctor.IdDoctor, Doctor.FIOVrach, Specialty.SpecialtyName, Doctor.WorkExperience FROM Doctor INNER JOIN Specialty ON Doctor.Specialty = Specialty.IdSpecialty;");
+            ResultSet results = statement.executeQuery("SELECT Doctor.IdDoctor, Doctor.FIOVrach," +
+                    " Specialty.SpecialtyName, Doctor.WorkExperience FROM Doctor INNER JOIN Specialty " +
+                    "ON Doctor.Specialty = Specialty.IdSpecialty;");
 
             while (results.next()) {
                 vraches.add(new Vrach1(results.getInt("IdDoctor"), results.getString("FIOVrach"),
                         results.getString("SpecialtyName")
                         ,results.getFloat("WorkExperience")));
-
             }
             connection.close();
             return vraches;
@@ -923,7 +938,6 @@ public class HelloController {
     }
         public ObservableList<Diagnosis1> ZapDiagnosis() {
             try {
-
                 Connection connection  = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/med",
                         "root", "1234");
@@ -931,11 +945,17 @@ public class HelloController {
                 ObservableList<Diagnosis1> diagnoses = FXCollections.observableArrayList();
 
                 Statement statement = connection.createStatement();
-                ResultSet results = statement.executeQuery("SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.IDStatus;");
+                ResultSet results = statement.executeQuery("SELECT Diagnosis.IdDiagnosis," +
+                        " Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment," +
+                        " Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis" +
+                        " INNER JOIN Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN Doctor ON Diagnosis.Doctor" +
+                        " = Doctor.IdDoctor INNER JOIN Status ON Diagnosis.Status = Status.IDStatus;");
                 while (results.next()) {
                     diagnoses.add(new Diagnosis1(results.getInt("IDDiagnosis"), results.getString("FIO"),
                             results.getString("DateOfApplication"),results.getString("Disease"),results.getString("Treatment")
-                            ,results.getString("FIOVrach"),results.getString("Complaints"),results.getString("Improvement"),results.getString("Name")));
+                            ,results.getString("FIOVrach"),
+                            results.getString("Complaints"),
+                            results.getString("Improvement"),results.getString("Name")));
                 }
                 connection.close();
                 return diagnoses;
@@ -943,5 +963,68 @@ public class HelloController {
 
                 throw new RuntimeException(e);
             }
+    }
+
+    public void poiskVracha(ActionEvent actionEvent) {
+        String a = null;
+        String b = "";
+        ObservableList<Vrach1> vrach1 = FXCollections.observableArrayList();
+        if (!VrachIDText.getText().toString().isEmpty()) {
+            if (!b.isEmpty()) {
+                b += " AND ";
+            }
+            b += " IdDoctor=" + VrachIDText.getText();
+
+        }
+        if (VrachFIOCombox.getValue()!=null) {
+            if (!b.isEmpty()) {
+                b += " AND ";
+            }
+            b += " FIOVrach='" + VrachFIOCombox.getValue()+"'";
+        }
+        if (VrachSpecCombox.getValue()!=null) {
+            if (!b.isEmpty()) {
+                b += " AND ";
+            }
+            b += " SpecialtyName='" + VrachSpecCombox.getValue()+"'";
+
+        }
+        if (!VrachStajText.getText().isEmpty()) {
+            if (!b.isEmpty()) {
+                b += " AND ";
+            }
+            b += " WorkExperience=" + VrachStajText.getText();
+            try {
+                Connection connection = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/med",
+                        "root", "1234");
+                Statement statement = connection.createStatement();
+                a = "SELECT Doctor.IdDoctor, Doctor.FIOVrach, Specialty.SpecialtyName, Doctor.WorkExperience FROM Doctor INNER JOIN Specialty  " +
+                        "ON Doctor.Specialty = Specialty.IdSpecialty where" + b + " ;";
+
+                ResultSet results = statement.executeQuery(a);
+                while (results.next()) {
+                    vrach1.add(new Vrach1(results.getInt("IdDoctor"), results.getString("FIOVrach"),
+                            results.getString("SpecialtyName"), results.getFloat("WorkExperience")));
+                }
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error while executing SQL query", e);
+
+            }
+            try {
+                dataTable2 = vrach1;
+                VrachFIOCombox.getItems().clear();
+                VrachSpecCombox.getItems().clear();
+                VrachID.setCellValueFactory(new PropertyValueFactory<>("col1"));
+                VrachFIO.setCellValueFactory(new PropertyValueFactory<>("col2"));
+                VrachSpec.setCellValueFactory(new PropertyValueFactory<>("col3"));
+                VrachStaj.setCellValueFactory(new PropertyValueFactory<>("col4"));
+                dataTable5=ZapSpec();
+                Vrach.setItems(dataTable2);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 }

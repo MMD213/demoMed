@@ -3,6 +3,7 @@ package com.example.demo;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,7 +11,7 @@ import java.util.Date;
 
 public class MedSpravka {
 
-    public static void med(String patientName, String doctorName,String complaints,String diagnosis,String recommendations) {
+    public static void med(String patientName, String doctorName, String complaints, String diagnosis, String recommendations) {
         // Замените эти значения соответствующими данными
         String organizationName = "Медицинская клиника";
         String clinicAddress = "Улица Клиническая, 123";
@@ -23,7 +24,7 @@ public class MedSpravka {
 
         try {
             generateMedicalDocument(organizationName, clinicAddress, clinicPhone, clinicEmail,
-                    patientName, doctorName,complaints, diagnosis, recommendations, currentDate, fileName);
+                    patientName, doctorName, complaints, diagnosis, recommendations, currentDate, fileName);
             System.out.println("Медицинский документ успешно создан в файле: " + fileName);
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
@@ -73,6 +74,31 @@ public class MedSpravka {
         addTextToDocument(document, "Подпись врача", font);
 
         document.close();
+    }
+
+    public static void openPdf(String fileName) {
+        try {
+
+            if ((new File("MedicalDocument.pdf")).exists()) {
+
+                Process p = Runtime
+                        .getRuntime()
+                        .exec("rundll32 url.dll,FileProtocolHandler MedicalDocument.pdf");
+                p.waitFor();
+
+            } else {
+
+                System.out.println("File is not exists");
+
+            }
+
+            System.out.println("Done");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 
     private static void addTextToDocument(Document document, String text, Font font) throws DocumentException {
