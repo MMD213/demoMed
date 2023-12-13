@@ -16,6 +16,9 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class HelloController {
+    String str="jdbc:mysql://localhost:3306/med";
+    String login="root";
+    String par="1234";
 
     @FXML
     private Button DiagDel;
@@ -250,8 +253,8 @@ public class HelloController {
     void DelDiag(ActionEvent event) {
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("delete from diagnosis where IdDiagnosis =" + NumID.getText() + ";");
@@ -266,8 +269,8 @@ public class HelloController {
     void DelPatient(ActionEvent event) {
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("delete from patient where IDPatient =" + Integer.parseInt(NumPolOsn.getText()) + ";");
@@ -282,8 +285,8 @@ public class HelloController {
     void DelVrach(ActionEvent event) {
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("delete from doctor where IdDoctor =" + VrachIDText.getText()+ ";");
@@ -388,8 +391,8 @@ public class HelloController {
         if (id.getText().isEmpty()) {
             try {
                 Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
                 Statement statement = connection.createStatement();
 
                 String a=("INSERT INTO Diagnosis (Patient, DateOfApplication, Disease, Treatment, Doctor, Complaints, Improvement, Status) " +
@@ -409,8 +412,8 @@ public class HelloController {
         } else {
             try {
                 Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
                 Statement statement = connection.createStatement();
 
                 statement.executeUpdate("UPDATE Diagnosis " +
@@ -433,8 +436,8 @@ public class HelloController {
     void DobPatient(ActionEvent event) {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("insert into patient (InsurancePolicyNumber,MedicalBookNumber,FIO,PlaceOfResidence,DateOfBirth) " +
@@ -452,8 +455,8 @@ public class HelloController {
     void DobVrach(ActionEvent event) {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
             statement.executeUpdate("insert into doctor (FIOVrach,Specialty,WorkExperience) values ('"+VrachFIOText.getText()+
                     "', (SELECT IdSpecialty FROM Specialty WHERE SpecialtyName='"+VrachSpecCombox.getValue()+"'),"+VrachStajText.getText()+");");
@@ -464,8 +467,14 @@ public class HelloController {
     }
     @FXML
     void Obn(ActionEvent event) {
+        VrachFIOCombox.getItems().clear();
+        VrachSpecCombox.getItems().clear();
+        StatusPoisk.getItems().clear();
+        comboBox1.clear();
+        comboBox2.clear();
+        comboBox3.clear();
         try {
-            StatusPoisk.getItems().clear();
+
             dataTable3 = ZapDiagnosis();
 
             DiagnozID.setCellValueFactory(new PropertyValueFactory<>("col1"));
@@ -499,8 +508,7 @@ public class HelloController {
             System.out.println(e);
         }
         try {
-            VrachFIOCombox.getItems().clear();
-            VrachSpecCombox.getItems().clear();
+
 
             dataTable2 = ZapVrach();
 
@@ -537,6 +545,8 @@ public class HelloController {
             VrachFIOText.setText("");
             for(int i=0;i<dataTable2.size();i++){
                 comboBox1.add(dataTable2.get(i).getCol2());
+            }
+            for(int i=0;i<dataTable5.size();i++){
                 comboBox2.add(dataTable5.get(i).getCol2());
             }
             VrachFIOCombox.setItems(comboBox1);
@@ -594,8 +604,8 @@ public class HelloController {
         }
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
             a="SELECT Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment," +
                     " Doctor.FIOVrach,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name FROM Diagnosis INNER JOIN Patient ON Diagnosis.Patient" +
@@ -667,8 +677,8 @@ public class HelloController {
 
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
             a="select*from patient where "+b+" ;";
 
@@ -794,8 +804,8 @@ public class HelloController {
     if(SpisokPatientov.isVisible() == true){
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("UPDATE patient " +
@@ -812,8 +822,8 @@ public class HelloController {
         if(VrachFIOCombox.getValue()!=""){
             try {
                 Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
                 Statement statement = connection.createStatement();
 
                 statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOCombox.getValue()+
@@ -828,8 +838,8 @@ public class HelloController {
         if(VrachFIOText.getText()!=""){
             try {
                 Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
                 Statement statement = connection.createStatement();
 
                 statement.executeUpdate("UPDATE doctor Set FIOVrach='"+VrachFIOText.getText()+
@@ -863,8 +873,8 @@ public class HelloController {
     public ObservableList<Patient1> ZapPat() {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             ObservableList<Patient1> patients1 = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM patient");
@@ -882,8 +892,8 @@ public class HelloController {
     public ObservableList<Specialty1> ZapSpec() {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             ObservableList<Specialty1> specialties = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM Specialty");
@@ -899,8 +909,8 @@ public class HelloController {
     public ObservableList<Status1> ZapStatus() {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
             ObservableList<Status1> statuses = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM status");
@@ -916,8 +926,8 @@ public class HelloController {
     public ObservableList<Vrach1> ZapVrach() {
         try {
             Connection connection  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/med",
-                    "root", "1234");
+                    str,
+                    login, par);
 
             ObservableList<Vrach1> vraches = FXCollections.observableArrayList();
             Statement statement = connection.createStatement();
@@ -939,8 +949,8 @@ public class HelloController {
         public ObservableList<Diagnosis1> ZapDiagnosis() {
             try {
                 Connection connection  = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
 
                 ObservableList<Diagnosis1> diagnoses = FXCollections.observableArrayList();
 
@@ -996,8 +1006,8 @@ public class HelloController {
             b += " WorkExperience=" + VrachStajText.getText();
             try {
                 Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/med",
-                        "root", "1234");
+                        str,
+                        login, par);
                 Statement statement = connection.createStatement();
                 a = "SELECT Doctor.IdDoctor, Doctor.FIOVrach, Specialty.SpecialtyName, Doctor.WorkExperience FROM Doctor INNER JOIN Specialty  " +
                         "ON Doctor.Specialty = Specialty.IdSpecialty where" + b + " ;";

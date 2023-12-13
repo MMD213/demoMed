@@ -21,18 +21,3 @@ create table Diagnosis
 insert Diagnosis (Patient,DateOfApplication,Disease,Treatment,Doctor,Complaints,Improvement,Status) value
 ('1','13.11.2023','атопический дерматит','супрастин','1','насморк и боль в горле','нет','1');
 
-drop table Treatment
-
-
-select*from Diagnosis
-
-select*from Specialty
-select*from Post
-SELECT        Diagnosis.IdDiagnosis, Patient.FIO, Diagnosis.DateOfApplication,Diagnosis.Disease,Diagnosis.Treatment, Doctor.FIO,Diagnosis.Complaints,Diagnosis.Improvement,Status.Name
-FROM            Diagnosis INNER JOIN
-                         Patient ON Diagnosis.Patient = Patient.IdPatient INNER JOIN
-                         Doctor ON Diagnosis.Doctor = Doctor.IdDoctor INNER JOIN
-						 Status ON Diagnosis.Status = Status.IdStatus
-select*from Doctor
-select*from Status
-
